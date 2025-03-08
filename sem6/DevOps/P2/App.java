@@ -17,3 +17,11 @@ public class App
         System.out.println("equals: "+ StringUtils.equals(text,t));
     }
 }
+
+/*
+Trimmed: Hello world
+Is Empty: true
+starts with: false
+ends with: false
+equals: false
+*/
