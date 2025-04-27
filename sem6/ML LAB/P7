@@ -20,3 +20,16 @@ plt.scatter(X_test,y_test,color='blue')
 plt.plot(X_test['sepal length (cm)'],y_predict,color='red')
 plt.title("Linear Regression")
 plt.show()
+
+#polynomial regression
+from sklearn.preprocessing import PolynomialFeatures,StandardScaler
+from sklearn.pipeline import make_pipeline
+poly=make_pipeline(PolynomialFeatures(degree=3),StandardScaler(),LinearRegression())
+poly.fit(X_train,y_train)
+y_predict=poly.predict(X_test)
+
+import matplotlib.pyplot as plt
+plt.scatter(X_test,y_test,color='blue',label='Actual')
+plt.scatter(X_test['sepal length (cm)'],y_predict,color='red',label='Predicted')
+plt.legend()
+plt.show()
