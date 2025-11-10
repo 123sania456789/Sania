@@ -1,0 +1,35 @@
+#include <mpi.h> 
+#include <stdio.h> 
+// Deadlock  
+int main(int argc, char** argv) { 
+int rank, size; 
+MPI_Status status; 
+long int data = 500; 
+MPI_Init(NULL, NULL); 
+MPI_Comm_rank(MPI_COMM_WORLD, &rank); 
+MPI_Comm_size(MPI_COMM_WORLD, &size); 
+if (size != 2) { 
+if (rank == 0) 
+printf("This program requires exactly 2 processes.\n"); 
+MPI_Finalize(); 
+return 0; 
+} 
+if (rank == 0) { 
+// Process 0 receives then send 
+MPI_Recv(&data, 1, MPI_INT, 1, 10, MPI_COMM_WORLD, &status); 
+printf("Received data from  process 1\n"); 
+MPI_Send(&data, 1, MPI_INT, 1, 10, MPI_COMM_WORLD); 
+printf("Sent data to process 1\n"); 
+}  else if (rank == 1) { 
+// Process 1  also receives then sends  
+MPI_Recv(&data, 1, MPI_INT, 0, 10, MPI_COMM_WORLD, &status);
+printf("Received data from process0\n"); 
+MPI_Send(&data, 1, MPI_INT, 0, 10, MPI_COMM_WORLD)      
+printf("Sent data to process 0\n");       
+} 
+printf("Process %d finished communication.\n", rank); 
+MPI_Finalize(); 
+return 0;        
+}
+
+
